@@ -19,6 +19,9 @@ export default function WordRotator() {
     if (!ghost || !box) return;
     ghost.textContent = word;
     box.style.width = `${Math.ceil(ghost.getBoundingClientRect().width)}px`;
+    // Clear immediately: the ghost is visually hidden but still contributes to
+    // textContent, so leaving it filled makes the h1 read "GTMGTM" to crawlers.
+    ghost.textContent = '';
   };
 
   useEffect(() => {
