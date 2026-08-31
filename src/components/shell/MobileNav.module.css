@@ -1,0 +1,60 @@
+/* Mobile-first on purpose: the drawer is the DEFAULT and desktop hides it.
+   If this stylesheet ever fails to load, a visitor gets navigation rather
+   than none — which is the failure mode that shipped before this existed. */
+.root { display: block; }
+
+.trigger { width:42px; height:42px; border-radius:12px; border:1px solid var(--line);
+  background: var(--paper); display:grid; place-items:center; cursor:pointer;
+  transition: background var(--t-fast) ease; }
+.trigger:hover { background: var(--paper-2); }
+
+.bars { display:flex; flex-direction:column; gap:4px; width:18px; }
+.bars i { display:block; height:2px; border-radius:2px; background: var(--ink);
+  transition: transform var(--t-base) var(--ease-out), opacity var(--t-fast) ease; }
+.barsOpen i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.barsOpen i:nth-child(2) { opacity: 0; }
+.barsOpen i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Both sit BELOW the header (z-index 200) so the close button stays
+   visible and tappable on top of the open drawer. */
+.scrim { position:fixed; inset:0; z-index:140; background: rgba(11,12,22,.4);
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+
+.panel { position:fixed; left:0; right:0; top:0; bottom:0; z-index:150;
+  background: var(--paper); overflow-y:auto; overscroll-behavior:contain;
+  padding: 84px var(--gut) 40px; display:flex; flex-direction:column; gap:2px;
+  animation: slideIn .22s var(--ease-out); }
+@keyframes slideIn { from { opacity:0; transform: translateY(-8px); } to { opacity:1; transform:none; } }
+
+.group { font-family: var(--font-mono); font-size:.625rem; letter-spacing:.14em;
+  text-transform:uppercase; font-weight:600; color: var(--faint);
+  margin:22px 0 8px; padding:0 4px; }
+.group:first-child { margin-top:0; }
+
+.stage { display:flex; align-items:center; gap:12px; padding:14px 14px; border-radius:14px;
+  transition: background var(--t-fast) ease; }
+.stage:hover, .stage:focus-visible { background: var(--hue-l); }
+.dot { width:10px; height:10px; border-radius:50%; background: var(--hue); flex:none; }
+.stageText { flex:1; min-width:0; }
+.stageText b { display:block; font-size:1rem; font-weight:650; letter-spacing:-.02em; }
+.stageText span { display:block; font-size:.8125rem; color: var(--mut); line-height:1.4; margin-top:2px; }
+
+.item { display:block; padding:14px; border-radius:14px; font-size:1rem; font-weight:550;
+  letter-spacing:-.015em; transition: background var(--t-fast) ease; }
+.item:hover, .item:focus-visible { background: var(--paper-2); }
+
+.actions { display:flex; flex-direction:column; gap:10px; margin-top:26px;
+  padding-top:26px; border-top:1px solid var(--line); }
+.full { width:100%; }
+
+.honest { margin:22px 0 0; padding:0 4px; font-size:.8125rem; color: var(--faint); line-height:1.6; }
+
+/* Header's .links hide at max-width 900px, so this takes over below 901px. */
+@media (min-width: 901px) {
+  .root { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel { animation: none; }
+  .bars i { transition: none; }
+}

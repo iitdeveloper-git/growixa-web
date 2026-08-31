@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import MegaMenu from './MegaMenu';
+import MobileNav from './MobileNav';
 import Button from '../primitives/Button';
 import Wrap from '../layout/Wrap';
 import { STAGES } from '../../content/stages';
@@ -51,6 +52,7 @@ export default function Header() {
             <Button as={Link} to="/pricing" size="sm">
               Start free
             </Button>
+            <MobileNav />
           </div>
         </nav>
       </Wrap>
