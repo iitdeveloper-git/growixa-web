@@ -42,6 +42,15 @@ a {
   border-radius: 4px;
 }
 
+/* Programmatic focus targets — the skip-link destination and any container we
+   move focus to on route change. They are never reached by Tab (tabindex="-1"),
+   so a ring around the whole page communicates nothing; screen readers still
+   announce the landmark. */
+[tabindex='-1']:focus,
+[tabindex='-1']:focus-visible {
+  outline: none;
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;

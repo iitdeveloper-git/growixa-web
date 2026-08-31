@@ -30,12 +30,13 @@ export function AppRoutes() {
 
 function RouteChangeReset() {
   const { pathname } = useLocation();
-  const first = useRef(true);
+  // Compare against the previous path rather than counting mounts: StrictMode
+  // double-invokes effects in development, and a "skip the first mount" flag
+  // survives the simulated unmount, so the second run would fire on page load.
+  const prev = useRef(pathname);
   useEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
+    if (prev.current === pathname) return;
+    prev.current = pathname;
     window.scrollTo(0, 0);
     document.getElementById('main')?.focus();
   }, [pathname]);
