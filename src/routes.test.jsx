@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import Header from './components/shell/Header';
 import Footer from './components/shell/Footer';
+import MobileNav from './components/shell/MobileNav';
 import { ROUTES } from './routes';
 
 /**
@@ -35,6 +37,20 @@ describe('route integrity', () => {
   it('every link the Header renders resolves to a registered route', () => {
     const missing = hrefsFrom(<Header />).filter((h) => !REGISTERED.has(h));
     expect(missing, `Header links to unregistered paths: ${missing.join(', ')}`).toEqual([]);
+  });
+
+  it('every link the mobile drawer renders resolves to a registered route', async () => {
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <MobileNav />
+      </MemoryRouter>
+    );
+    await userEvent.click(screen.getByRole('button', { name: /menu/i }));
+    const missing = screen
+      .getAllByRole('link')
+      .map((a) => a.getAttribute('href'))
+      .filter((h) => h && h.startsWith('/') && !REGISTERED.has(h));
+    expect(missing, `mobile drawer links to unregistered paths: ${missing.join(', ')}`).toEqual([]);
   });
 
   it('the Footer actually emits links (guards against a vacuous pass above)', () => {
