@@ -1,0 +1,45 @@
+.box {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  vertical-align: baseline;
+  height: 0.98em;
+  line-height: 0.98em;
+  transition: width 0.5s cubic-bezier(0.2, 0.85, 0.25, 1);
+  will-change: width;
+}
+
+.word {
+  display: inline-block;
+  white-space: nowrap;
+  background: linear-gradient(
+    100deg,
+    var(--find) 0%,
+    var(--create) 42%,
+    var(--send) 76%,
+    var(--qualify) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--create);
+  -webkit-text-fill-color: transparent;
+  transition:
+    transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.32s ease;
+}
+
+.out {
+  transform: translateY(-88%);
+  opacity: 0;
+}
+
+.ghost {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  font: inherit;
+  letter-spacing: inherit;
+}
