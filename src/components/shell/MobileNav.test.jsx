@@ -87,7 +87,6 @@ describe('MobileNav', () => {
     const nav = screen.getByRole('navigation', { name: 'Mobile' });
     const behind = screen.getByRole('link', { name: 'behind the drawer' });
     for (let i = 0; i < 40; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
       await userEvent.tab();
       expect(document.activeElement).not.toBe(behind);
     }
